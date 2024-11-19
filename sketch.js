@@ -1,13 +1,13 @@
 let inputA, inputB, button, resultContainer;
-const rectWidth = 0.6; // Usar proporção da tela
-const rectHeight = 0.5; // Usar proporção da tela
+const rectWidth = 0.8; // Usar 80% da largura da tela para o retângulo central
+const rectHeight = 0.6; // Usar 60% da altura da tela para o retângulo central
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   drawBackground();
 
-  // Definir largura dos inputs e botão com base na largura da tela
-  const elementWidth = windowWidth * 0.2;  // 40% da largura da tela
+  // Definir a largura dos inputs e botão com base na largura da tela
+  const elementWidth = windowWidth * 0.6;  // 60% da largura da tela
 
   // Criar o primeiro input centralizado
   inputA = createInput();
@@ -60,11 +60,14 @@ function drawBackground() {
   rectMode(CENTER);
   rect(width / 2, height / 2, width * rectWidth, height * rectHeight);
 
-  // Título
-  textSize(24);
+  // Ajustar o tamanho da fonte com base na largura da tela
+  let fontSize = min(windowWidth * 0.05, 30); // Limitar o tamanho máximo da fonte
+
+  // Título - Centralizado e com fonte dinâmica
+  textSize(fontSize);
   textAlign(CENTER);
   fill(0);
-  text("Digite os números para encontrar o MDC", width / 2, height / 2 - 80);
+  text("Digite os números para encontrar o MDC", width / 2, height / 2 - 100);
 }
 
 function calcular() {
@@ -94,4 +97,14 @@ function calcular() {
   // Calcular e mostrar o resultado
   let resultado = calcularMDC(num1, num2);
   resultContainer.html('O MDC é: ' + resultado);
+}
+
+// Reajustar o layout e o canvas ao redimensionar a tela
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  drawBackground();
+  inputA.position(width / 2 - inputA.width / 2, height / 2 - 50);
+  inputB.position(width / 2 - inputB.width / 2, height / 2);
+  button.position(width / 2 - button.width / 2, height / 2 + 60);
+  resultContainer.position(width / 2 - resultContainer.width / 2, height / 2 + 120);
 }
